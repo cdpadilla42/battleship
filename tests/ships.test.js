@@ -1,3 +1,5 @@
+import shipsFactory from '../modules/ships';
+
 test.todo('Ships facotry returns appropriate lengthed ship', () => {
   expect(shipsFactory(4).length).toBe(4);
 });
