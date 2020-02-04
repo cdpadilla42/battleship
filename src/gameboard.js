@@ -3,7 +3,9 @@ import shipsFactory from './ships';
 const gameboard = function() {
   let model = new Array(64).fill(null);
   let ships = {
-    // object containing ships placed on the board
+    A: shipsFactory(2, 'A'),
+    B: shipsFactory(3, 'B'),
+    C: shipsFactory(1, 'C')
   };
   const isShipOverflowing = (shipLength, location) => {
     let edge;
@@ -31,6 +33,10 @@ const gameboard = function() {
     return false;
   };
 
+  const showShips = () => {
+    return ships;
+  };
+
   const placeShip = function(ship, location) {
     const shipName = ship.showName();
     const shipLength = ship.showLength();
@@ -42,11 +48,6 @@ const gameboard = function() {
       model[i] = `${shipName}${counter}`;
       counter++;
     }
-    // Add ship to ships object by shipName
-  };
-
-  const addShipToCollection = shipName => {
-    // does that
   };
 
   const placementError = () => {
@@ -61,7 +62,10 @@ const gameboard = function() {
     } else if (model[coord] === 'X') {
       return;
     } else {
+      const shipName = model[coord][0];
+      const hitLocation = model[coord][1];
       model[coord] = 'X';
+      ships[shipName].hit(hitLocation - 1);
     }
   };
 
@@ -69,13 +73,7 @@ const gameboard = function() {
     return b - 1 + (a - 1) * 8;
   };
 
-  // board represented by array, 8 x 8 in size
-  // ship parts are placed on the board
-  // represented by identifier and index of ship model (A1, A2, B1, B2, B3)
-  // first corner is selected by player, then proceeding parts of array are filled in
-  // hit represented with an X. Blank hit with a 'miss'
-
-  return { placeShip, showBoard, placementError, recieveAttack };
+  return { placeShip, showBoard, placementError, recieveAttack, showShips };
 };
 
 export { gameboard as default };

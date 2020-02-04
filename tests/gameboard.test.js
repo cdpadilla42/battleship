@@ -1,7 +1,7 @@
 import gameboard from '../src/gameboard';
 import shipsFactory from '../src/ships';
 
-describe.skip('Ship Placement', () => {
+describe('Ship Placement', () => {
   test('Places a single ship on the board', () => {
     const currentBoard = gameboard();
     const shipA = shipsFactory(1, 'A');
@@ -45,7 +45,7 @@ describe.skip('Ship Placement', () => {
   });
 });
 
-describe.skip('Board overflow', () => {
+describe('Board overflow', () => {
   test('board rejects a ship that overflows the board', () => {
     const currentBoard = gameboard();
     const shipA = shipsFactory(2, 'A');
@@ -145,12 +145,10 @@ describe.skip('Board overflow', () => {
 
 describe('recieveAttack', () => {
   const currentBoard = gameboard();
-  const shipA = shipsFactory(2, 'A');
-  const shipB = shipsFactory(3, 'B');
-  const shipC = shipsFactory(1, 'C');
-  currentBoard.placeShip(shipA, 0);
-  currentBoard.placeShip(shipB, 3);
-  currentBoard.placeShip(shipC, 7);
+  const shipsObj = currentBoard.showShips();
+  currentBoard.placeShip(shipsObj.A, 0);
+  currentBoard.placeShip(shipsObj.B, 3);
+  currentBoard.placeShip(shipsObj.C, 7);
 
   test('recieveAttack takes in coordinates and shows a miss', () => {
     currentBoard.recieveAttack(2);
@@ -204,7 +202,37 @@ describe('recieveAttack', () => {
     expect(currentBoard.showBoard()).toStrictEqual(expected);
   });
 
-  test.todo('recieveAttack shows a hit, altering ships model array');
+  test('recieveAttack shows a hit, altering ships model array', () => {
+    currentBoard.recieveAttack(0);
+    const arrFill = new Array(56).fill(null);
+    const expected = [
+      'X',
+      'A2',
+      'miss',
+      'B1',
+      'B2',
+      'B3',
+      null,
+      'C1',
+      ...arrFill
+    ];
+    expect(shipsObj.A.showModel()).toStrictEqual(['x', null]);
+  });
 
-  test.todo('recieveAttack shows a hit, altering ships model array 2');
+  test('recieveAttack shows a hit, altering ships model array 2', () => {
+    currentBoard.recieveAttack(1);
+    const arrFill = new Array(56).fill(null);
+    const expected = [
+      'A1',
+      'X',
+      'miss',
+      'B1',
+      'B2',
+      'B3',
+      null,
+      'C1',
+      ...arrFill
+    ];
+    expect(shipsObj.A.showModel()).toStrictEqual(['x', 'x']);
+  });
 });
