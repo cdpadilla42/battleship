@@ -234,5 +234,32 @@ describe('recieveAttack', () => {
       ...arrFill
     ];
     expect(shipsObj.A.showModel()).toStrictEqual(['x', 'x']);
+    // both spots marked due to previous test.
+  });
+
+  test('board shows if all ships are NOT sunk', () => {
+    expect(currentBoard.areShipsSunk()).toStrictEqual(false);
+  });
+
+  test('board shows if all ships are sunk', () => {
+    for (var i = 0; i < 8; i++) {
+      currentBoard.recieveAttack(i);
+    }
+    expect(currentBoard.areShipsSunk()).toStrictEqual(true);
+  });
+});
+
+describe('All Ship Sunk', () => {
+  const currentBoard = gameboard();
+  const shipsObj = currentBoard.showShips();
+  currentBoard.placeShip(shipsObj.A, 0);
+  currentBoard.placeShip(shipsObj.B, 3);
+  currentBoard.placeShip(shipsObj.C, 7);
+
+  test('board shows if all ships are sunk', () => {
+    for (var i = 0; i < 8; i++) {
+      currentBoard.recieveAttack(i);
+    }
+    expect(currentBoard.areShipsSunk()).toStrictEqual(true);
   });
 });

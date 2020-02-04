@@ -7,6 +7,16 @@ const gameboard = function() {
     B: shipsFactory(3, 'B'),
     C: shipsFactory(1, 'C')
   };
+
+  const areShipsSunk = () => {
+    for (const key in ships) {
+      if (!ships[key].isSunk()) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const isShipOverflowing = (shipLength, location) => {
     let edge;
     if (location < 8) {
@@ -73,7 +83,14 @@ const gameboard = function() {
     return b - 1 + (a - 1) * 8;
   };
 
-  return { placeShip, showBoard, placementError, recieveAttack, showShips };
+  return {
+    placeShip,
+    showBoard,
+    placementError,
+    recieveAttack,
+    showShips,
+    areShipsSunk
+  };
 };
 
 export { gameboard as default };
