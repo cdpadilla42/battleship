@@ -1,6 +1,9 @@
-const shipsFactory = function(length) {
+const shipsFactory = function(length, identifier) {
   const shipLength = length;
   const shipModel = new Array(shipLength).fill(null);
+  const name = identifier;
+
+  const showName = () => name;
 
   const showModel = () => {
     return shipModel;
@@ -23,7 +26,7 @@ const shipsFactory = function(length) {
     shipModel[n] = 'x';
   };
 
-  return { showLength, showModel, hit, isSunk };
+  return { showLength, showModel, hit, isSunk, showName };
 };
 
 export { shipsFactory as default };
