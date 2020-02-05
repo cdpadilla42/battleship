@@ -11,7 +11,7 @@ const gameLoop = function() {
   };
 
   const autoPlaceShips = function(player) {
-    const currentBoard = player.playerBoard; // Does this route correctly?
+    const currentBoard = player.playerBoard;
     const shipsObj = currentBoard.showShips();
     currentBoard.placeShip(shipsObj.A, 0);
     currentBoard.placeShip(shipsObj.B, 3);
