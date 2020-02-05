@@ -72,3 +72,21 @@ describe('Computer moves', () => {
     expect(playerOne.playerBoard.showBoard()).not.toStrictEqual(expected);
   });
 });
+
+describe.skip('Computer moves no repeats', () => {
+  const playerOne = playerFactory();
+  const computerPlayer = computer();
+
+  const currentBoard = playerOne.playerBoard;
+  const shipsObj = currentBoard.showShips();
+  // currentBoard.placeShip(shipsObj.A, 0);
+  // currentBoard.placeShip(shipsObj.B, 3);
+  // currentBoard.placeShip(shipsObj.C, 7);
+  test('computer does not repeat moves', () => {
+    for (var i = 0; i < 65; i++) {
+      computerPlayer.randomMove(playerOne);
+    }
+    const expected = new Array(64).fill('miss');
+    expect(playerOne.playerBoard.showBoard()).toStrictEqual(expected);
+  });
+});
