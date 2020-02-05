@@ -86,14 +86,75 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/DOM.js":
+/*!********************!*\
+  !*** ./src/DOM.js ***!
+  \********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return DOM; });\nconst DOM = (() => {\n  const renderPlayerBoard = (player, name) => {\n    const boardData = player.playerBoard.showBoard();\n    const boardElement = document.querySelector(`.${name} table`);\n    console.log(boardElement);\n\n    const newBoardElement = document.createElement('table');\n    newBoardElement.classList.add('boardtable');\n    for (var i = 0; i < boardData.length; i++) {\n      console.log(boardData[i], i);\n      const tdElement = document.createElement('td');\n      tdElement.innerText = boardData[i];\n      // Next step...how to get this too fit into tr/td style of iteration. We'll see!\n    }\n  };\n\n  return { renderPlayerBoard };\n})();\n\n\n\n\n//# sourceURL=webpack:///./src/DOM.js?");
+
+/***/ }),
+
+/***/ "./src/game-loop.js":
+/*!**************************!*\
+  !*** ./src/game-loop.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return gameLoop; });\n/* harmony import */ var _player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./player */ \"./src/player.js\");\n/* harmony import */ var _DOM__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DOM */ \"./src/DOM.js\");\n\n\n\nconst gameLoop = function() {\n  let playerOne = Object(_player__WEBPACK_IMPORTED_MODULE_0__[\"playerFactory\"])();\n  let playerTwo = Object(_player__WEBPACK_IMPORTED_MODULE_0__[\"computer\"])();\n\n  const newGameComp = function() {\n    autoPlaceShips(playerOne);\n    autoPlaceShips(playerTwo);\n  };\n\n  const autoPlaceShips = function(player) {\n    const currentBoard = player.playerBoard; // Does this route correctly?\n    const shipsObj = currentBoard.showShips();\n    currentBoard.placeShip(shipsObj.A, 0);\n    currentBoard.placeShip(shipsObj.B, 3);\n    currentBoard.placeShip(shipsObj.C, 7);\n  };\n\n  const isOver = () => {\n    if (playerOne.playerBoard.areShipsSunk()) {\n      // player two wins!\n      return true;\n    }\n    if (playerTwo.playerBoard.areShipsSunk()) {\n      // player one wins!\n      return true;\n    }\n    return false;\n  };\n\n  const renderBoard = (player, name) => {\n    _DOM__WEBPACK_IMPORTED_MODULE_1__[\"default\"].renderPlayerBoard(player, name);\n  };\n\n  return { newGameComp, playerOne, playerTwo, isOver, renderBoard };\n};\n\n\n\n\n//# sourceURL=webpack:///./src/game-loop.js?");
+
+/***/ }),
+
+/***/ "./src/gameboard.js":
+/*!**************************!*\
+  !*** ./src/gameboard.js ***!
+  \**************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return gameboard; });\n/* harmony import */ var _ships__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ships */ \"./src/ships.js\");\n\n\nconst gameboard = function() {\n  let model = new Array(64).fill(null);\n  let ships = {\n    A: Object(_ships__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(2, 'A'),\n    B: Object(_ships__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(3, 'B'),\n    C: Object(_ships__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(1, 'C')\n  };\n\n  const areShipsSunk = () => {\n    for (const key in ships) {\n      if (!ships[key].isSunk()) {\n        return false;\n      }\n    }\n    return true;\n  };\n\n  const isShipOverflowing = (shipLength, location) => {\n    let edge;\n    if (location < 8) {\n      edge = 8;\n    } else if (location >= 8 && location < 16) {\n      edge = 16;\n    } else if (location >= 16 && location < 24) {\n      edge = 24;\n    } else if (location >= 24 && location < 32) {\n      edge = 32;\n    } else if (location >= 32 && location < 40) {\n      edge = 40;\n    } else if (location >= 40 && location < 48) {\n      edge = 48;\n    } else if (location >= 48 && location < 56) {\n      edge = 56;\n    } else {\n      edge = 64;\n    }\n\n    if (location + (shipLength - 1) >= edge) {\n      return true;\n    }\n    return false;\n  };\n\n  const showShips = () => {\n    return ships;\n  };\n\n  const placeShip = function(ship, location) {\n    const shipName = ship.showName();\n    const shipLength = ship.showLength();\n    if (isShipOverflowing(shipLength, location)) {\n      return placementError();\n    }\n    let counter = 1;\n    for (var i = location; i < shipLength + location; i++) {\n      model[i] = `${shipName}${counter}`;\n      counter++;\n    }\n  };\n\n  const placementError = () => {\n    return new Error('Could not place ships');\n  };\n\n  const showBoard = () => model;\n\n  const recieveAttack = coord => {\n    if (model[coord] === null || model[coord] === 'miss') {\n      model[coord] = 'miss';\n    } else if (model[coord] === 'X') {\n      return;\n    } else {\n      const shipName = model[coord][0];\n      const hitLocation = model[coord][1];\n      model[coord] = 'X';\n      ships[shipName].hit(hitLocation - 1);\n    }\n  };\n\n  const translateCoordinates = (a, b) => {\n    return b - 1 + (a - 1) * 8;\n  };\n\n  return {\n    placeShip,\n    showBoard,\n    placementError,\n    recieveAttack,\n    showShips,\n    areShipsSunk\n  };\n};\n\n\n\n\n//# sourceURL=webpack:///./src/gameboard.js?");
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-eval("\n\n//# sourceURL=webpack:///./src/index.js?");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _game_loop__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game-loop */ \"./src/game-loop.js\");\n\n\nconst currentGame = Object(_game_loop__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\ncurrentGame.renderBoard(currentGame.playerOne, 'player-one');\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/player.js":
+/*!***********************!*\
+  !*** ./src/player.js ***!
+  \***********************/
+/*! exports provided: playerFactory, computer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"playerFactory\", function() { return playerFactory; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"computer\", function() { return computer; });\n/* harmony import */ var _gameboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gameboard */ \"./src/gameboard.js\");\n\n\nconst playerFactory = function() {\n  const playerBoard = Object(_gameboard__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\n  const move = (target, coord) => {\n    target.playerBoard.recieveAttack(coord);\n  };\n  const showPlayerBoard = () => {\n    return playerBoard.showBoard();\n  };\n  return { move, playerBoard };\n};\n\nconst computer = function() {\n  const playerBoard = Object(_gameboard__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\n\n  const moveList = [];\n\n  const move = (target, coord) => {\n    target.playerBoard.recieveAttack(coord);\n  };\n\n  const getRandomInt = function(max) {\n    let selection = Math.floor(Math.random() * Math.floor(max));\n    if (moveList.find(element => element === selection)) {\n      return getRandomInt(max);\n    }\n    return selection;\n  };\n\n  const randomMove = target => {\n    // add logic for knowing not to repeat thine self\n    let randomCoord = getRandomInt(64);\n    move(target, randomCoord);\n    moveList.push(randomCoord);\n  };\n\n  return { randomMove, playerBoard };\n};\n\n\n\n\n//# sourceURL=webpack:///./src/player.js?");
+
+/***/ }),
+
+/***/ "./src/ships.js":
+/*!**********************!*\
+  !*** ./src/ships.js ***!
+  \**********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return shipsFactory; });\nconst shipsFactory = function(length, identifier) {\n  const shipLength = length;\n  const shipModel = new Array(shipLength).fill(null);\n  const name = identifier;\n\n  const showName = () => name;\n\n  const showModel = () => {\n    return shipModel;\n  };\n\n  const isSunk = () => {\n    for (var i = 0; i < shipLength; i++) {\n      if (shipModel[i] === null) {\n        return false;\n      }\n    }\n    return true;\n  };\n\n  const showLength = () => {\n    return shipLength;\n  };\n\n  const hit = n => {\n    shipModel[n] = 'x';\n  };\n\n  return { showLength, showModel, hit, isSunk, showName };\n};\n\n\n\n\n//# sourceURL=webpack:///./src/ships.js?");
 
 /***/ })
 

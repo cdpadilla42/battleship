@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Battleship!!</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div>
+      <h1>Battleship!</h1>
+      <div class="winner-space">
+        <div class="winner">Enter player names</div>
+      </div>
+      <div class="gameboards">
+        <div class="player-one">
+          <table class="boardtable">
+            <tr>
+              <td data-index="0"></td>
+              <td data-index="1"></td>
+              <td data-index="2"></td>
+              <td data-index="3"></td>
+              <td data-index="4"></td>
+              <td data-index="5"></td>
+              <td data-index="6"></td>
+              <td data-index="7"></td>
+            </tr>
+            <tr>
+              <td data-index="8"></td>
+              <td data-index="9"></td>
+              <td data-index="10"></td>
+              <td data-index="11"></td>
+              <td data-index="12"></td>
+              <td data-index="13"></td>
+              <td data-index="14"></td>
+              <td data-index="15"></td>
+            </tr>
+            <tr>
+              <td data-index="16"></td>
+              <td data-index="17"></td>
+              <td data-index="18"></td>
+              <td data-index="19"></td>
+              <td data-index="20"></td>
+              <td data-index="21"></td>
+              <td data-index="22"></td>
+              <td data-index="23"></td>
+            </tr>
+            <tr>
+              <td data-index="24"></td>
+              <td data-index="25"></td>
+              <td data-index="26"></td>
+              <td data-index="27"></td>
+              <td data-index="28"></td>
+              <td data-index="29"></td>
+              <td data-index="30"></td>
+              <td data-index="31"></td>
+            </tr>
+            <tr>
+              <td data-index="32"></td>
+              <td data-index="33"></td>
+              <td data-index="34"></td>
+              <td data-index="35"></td>
+              <td data-index="36"></td>
+              <td data-index="37"></td>
+              <td data-index="38"></td>
+              <td data-index="39"></td>
+            </tr>
+            <tr>
+              <td data-index="40"></td>
+              <td data-index="41"></td>
+              <td data-index="42"></td>
+              <td data-index="43"></td>
+              <td data-index="44"></td>
+              <td data-index="45"></td>
+              <td data-index="46"></td>
+              <td data-index="47"></td>
+            </tr>
+            <tr>
+              <td data-index="48"></td>
+              <td data-index="49"></td>
+              <td data-index="50"></td>
+              <td data-index="51"></td>
+              <td data-index="52"></td>
+              <td data-index="53"></td>
+              <td data-index="54"></td>
+              <td data-index="55"></td>
+            </tr>
+            <tr>
+              <td data-index="56"></td>
+              <td data-index="57"></td>
+              <td data-index="58"></td>
+              <td data-index="59"></td>
+              <td data-index="60"></td>
+              <td data-index="61"></td>
+              <td data-index="62"></td>
+              <td data-index="63"></td>
+            </tr>
+          </table>
+        </div>
+        <div class="player-two">
+          <table class="boardtable">
+            <tr>
+              <td data-index="0"></td>
+              <td data-index="1"></td>
+              <td data-index="2"></td>
+              <td data-index="3"></td>
+              <td data-index="4"></td>
+              <td data-index="5"></td>
+              <td data-index="6"></td>
+              <td data-index="7"></td>
+            </tr>
+            <tr>
+              <td data-index="8"></td>
+              <td data-index="9"></td>
+              <td data-index="10"></td>
+              <td data-index="11"></td>
+              <td data-index="12"></td>
+              <td data-index="13"></td>
+              <td data-index="14"></td>
+              <td data-index="15"></td>
+            </tr>
+            <tr>
+              <td data-index="16"></td>
+              <td data-index="17"></td>
+              <td data-index="18"></td>
+              <td data-index="19"></td>
+              <td data-index="20"></td>
+              <td data-index="21"></td>
+              <td data-index="22"></td>
+              <td data-index="23"></td>
+            </tr>
+            <tr>
+              <td data-index="24"></td>
+              <td data-index="25"></td>
+              <td data-index="26"></td>
+              <td data-index="27"></td>
+              <td data-index="28"></td>
+              <td data-index="29"></td>
+              <td data-index="30"></td>
+              <td data-index="31"></td>
+            </tr>
+            <tr>
+              <td data-index="32"></td>
+              <td data-index="33"></td>
+              <td data-index="34"></td>
+              <td data-index="35"></td>
+              <td data-index="36"></td>
+              <td data-index="37"></td>
+              <td data-index="38"></td>
+              <td data-index="39"></td>
+            </tr>
+            <tr>
+              <td data-index="40"></td>
+              <td data-index="41"></td>
+              <td data-index="42"></td>
+              <td data-index="43"></td>
+              <td data-index="44"></td>
+              <td data-index="45"></td>
+              <td data-index="46"></td>
+              <td data-index="47"></td>
+            </tr>
+            <tr>
+              <td data-index="48"></td>
+              <td data-index="49"></td>
+              <td data-index="50"></td>
+              <td data-index="51"></td>
+              <td data-index="52"></td>
+              <td data-index="53"></td>
+              <td data-index="54"></td>
+              <td data-index="55"></td>
+            </tr>
+            <tr>
+              <td data-index="56"></td>
+              <td data-index="57"></td>
+              <td data-index="58"></td>
+              <td data-index="59"></td>
+              <td data-index="60"></td>
+              <td data-index="61"></td>
+              <td data-index="62"></td>
+              <td data-index="63"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="message">
+        Player entry below!
+      </div>
+      <div class="round-button-space">
+        <button id="round-start">New Round</button>
+      </div>
+
+      <div class="form">
+        <form>
+          <label
+            for="name"
+            id="player-name-label"
+            onsubmit="gameFlow.initializePlayerOne()"
+            >Player One Name:</label
+          >
+          <input name="name" type="text" id="player-name-field" />
+        </form>
+        <button id="name-submit">Submit</button>
+      </div>
+    </div>
+    <script src="main.js"></script>
+  </body>
+</html>
