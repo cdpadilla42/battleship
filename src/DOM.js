@@ -11,8 +11,9 @@ const DOM = (() => {
     for (var i = 0; i < boardData.length; i++) {
       let tdElement = document.createElement('td');
       tdElement.innerText = boardData[i];
+      stylizeTdElement(tdElement, boardData[i]);
       trElement.appendChild(tdElement);
-      // if the current iteration is a breaking point
+      // if the current iteration has filled a row, start a new tr
       if (breakPoints.find(current => current === i)) {
         newBoardElement.appendChild(trElement);
         trElement = document.createElement('tr');
@@ -21,6 +22,19 @@ const DOM = (() => {
     console.log(newBoardElement);
     boardElement.innerHTML = '';
     boardElement.appendChild(newBoardElement);
+  };
+
+  const stylizeTdElement = function(tdElement, data) {
+    if (data === 'X') {
+      tdElement.classList.add('hit');
+    }
+    if (data === null) {
+      return;
+    }
+    if (data === 'miss') {
+      tdElement.classList.add('miss');
+    }
+    tdElement.classList.add('ship');
   };
 
   return { renderPlayerBoard };
