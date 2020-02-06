@@ -1,6 +1,6 @@
 const DOM = (() => {
   let breakPoints = [7, 15, 23, 31, 39, 47, 55, 63];
-  const renderPlayerBoard = (player, name) => {
+  const renderPlayerBoard = (player, name, opponentObj) => {
     const boardData = player.playerBoard.showBoard();
     const boardElement = document.querySelector(`.${name}`);
 
@@ -12,6 +12,8 @@ const DOM = (() => {
       let tdElement = document.createElement('td');
       tdElement.innerText = boardData[i];
       stylizeTdElement(tdElement, boardData[i]);
+      addDataIndex(tdElement, i);
+      addListenerToTd(tdElement, player, opponentObj);
       trElement.appendChild(tdElement);
       // if the current iteration has filled a row, start a new tr
       if (breakPoints.find(current => current === i)) {
@@ -36,6 +38,20 @@ const DOM = (() => {
     }
     tdElement.classList.add('ship');
   };
+
+  const addDataIndex = (td, index) => {
+    td.setAttribute('data-index', index); // TODO DEBUG ME!!
+  };
+
+  const addListenerToTd = (td, player, opponentObj) => {
+    td.addEventListener('click', e => {
+      console.log(e.target.getAttribute('data-index'));
+      const index = e.target.getAttribute('data-index');
+      player.move(opponentObj, index);
+    });
+  };
+
+  const recieveClick = e => {};
 
   return { renderPlayerBoard };
 })();

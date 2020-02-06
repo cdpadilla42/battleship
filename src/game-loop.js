@@ -30,8 +30,8 @@ const gameLoop = function() {
     return false;
   };
 
-  const renderBoard = (player, name) => {
-    DOM.renderPlayerBoard(player, name);
+  const renderBoard = (player, name, opponentObj) => {
+    DOM.renderPlayerBoard(player, name, opponentObj);
   };
 
   return { newGameComp, playerOne, playerTwo, isOver, renderBoard };
