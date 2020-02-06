@@ -7,3 +7,15 @@ currentGame.renderBoard(
   'player-one',
   currentGame.playerTwo
 );
+
+currentGame.renderBoard(
+  currentGame.playerOne,
+  'player-one',
+  currentGame.playerTwo
+);
+
+currentGame.renderSecretBoard(
+  currentGame.playerTwo,
+  'player-two',
+  currentGame.playerOne
+);

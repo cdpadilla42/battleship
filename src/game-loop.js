@@ -34,7 +34,18 @@ const gameLoop = function() {
     DOM.renderPlayerBoard(player, name, opponentObj);
   };
 
-  return { newGameComp, playerOne, playerTwo, isOver, renderBoard };
+  const renderSecretBoard = (player, name, opponentObj) => {
+    DOM.renderSecretBoard(player, name, opponentObj);
+  };
+
+  return {
+    newGameComp,
+    playerOne,
+    playerTwo,
+    isOver,
+    renderBoard,
+    renderSecretBoard
+  };
 };
 
 export { gameLoop as default };

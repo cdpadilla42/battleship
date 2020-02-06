@@ -79,6 +79,10 @@ td.miss {
   background-color: #51539c;
 }
 
+td.secret {
+  background-color: grey;
+}
+
 .hide {
   display: none;
 }
