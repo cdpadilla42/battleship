@@ -1,6 +1,7 @@
 import gameLoop from './game-loop';
 
 const currentGame = gameLoop();
+currentGame.gameStart();
 currentGame.newGameComp();
 currentGame.renderBoard(
   currentGame.playerOne,

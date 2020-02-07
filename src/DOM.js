@@ -13,7 +13,8 @@ const DOM = (() => {
       tdElement.innerText = boardData[i];
       stylizeTdElement(tdElement, boardData[i]);
       addDataIndex(tdElement, i);
-      addListenerToTd(tdElement, player, opponentObj);
+      // below line for two live player functionality. Not need for CPU
+      // addListenerToTd(tdElement, opponentObj, player);
       trElement.appendChild(tdElement);
       // if the current iteration has filled a row, start a new tr
       if (breakPoints.find(current => current === i)) {
@@ -38,7 +39,7 @@ const DOM = (() => {
       tdElement.innerText = boardData[i];
       stylizeSecretElements(tdElement, boardData[i]);
       addDataIndex(tdElement, i);
-      addListenerToTd(tdElement, player, opponentObj);
+      addListenerToTd(tdElement, opponentObj, player);
       trElement.appendChild(tdElement);
       // if the current iteration has filled a row, start a new tr
       if (breakPoints.find(current => current === i)) {
@@ -83,10 +84,21 @@ const DOM = (() => {
 
   const addListenerToTd = (td, player, opponentObj) => {
     td.addEventListener('click', e => {
+      // switch moves here
       console.log(e.target.getAttribute('data-index'));
       const index = e.target.getAttribute('data-index');
+      console.log('for', player);
       player.move(opponentObj, index);
     });
+  };
+
+  const nextMove = (player, name, opponentObj) => {
+    // add message (player X's turn)
+    console.log('next move!');
+    // update board
+    // update current turn var
+    // if CPU
+    // if make move, return to player
   };
 
   const changeLowerMessage = message => {
@@ -99,7 +111,7 @@ const DOM = (() => {
     bannerDiv.innerText = message;
   };
 
-  return { renderPlayerBoard, renderSecretBoard };
+  return { renderPlayerBoard, renderSecretBoard, nextMove };
 })();
 
 export { DOM as default };

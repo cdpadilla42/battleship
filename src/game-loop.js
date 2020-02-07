@@ -38,13 +38,28 @@ const gameLoop = function() {
     DOM.renderSecretBoard(player, name, opponentObj);
   };
 
+  const nextMove = (player, name, opponentObj) => {
+    // connects to DOM's next move changes
+    DOM.nextMove(player, name, opponentObj);
+  };
+
+  const gameStart = () => {
+    // render boards
+    // render message
+    // start move
+    let playerOne = playerFactory();
+    nextMove(playerOne, 'player-one', playerTwo);
+  };
+
   return {
     newGameComp,
     playerOne,
     playerTwo,
     isOver,
     renderBoard,
-    renderSecretBoard
+    renderSecretBoard,
+    nextMove,
+    gameStart
   };
 };
 
