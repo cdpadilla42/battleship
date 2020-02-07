@@ -1,5 +1,8 @@
+import gameLoop from './game-loop';
+
 const DOM = (() => {
   let breakPoints = [7, 15, 23, 31, 39, 47, 55, 63];
+  let callbackForMove;
   const renderPlayerBoard = (player, name, opponentObj) => {
     const boardData = player.playerBoard.showBoard();
     const boardElement = document.querySelector(`.${name}`);
@@ -89,16 +92,22 @@ const DOM = (() => {
       const index = e.target.getAttribute('data-index');
       console.log('for', player);
       player.move(opponentObj, index);
+      gameLoop().nextMove(player, 'player-one', opponentObj);
     });
   };
 
-  const nextMove = (player, name, opponentObj) => {
-    // add message (player X's turn)
-    console.log('next move!');
-    // update board
-    // update current turn var
-    // if CPU
-    // if make move, return to player
+  const firstMove = (player, name, opponentObj) => {
+    changeLowerMessage(`It's ${name}'s turn!`);
+  };
+
+  const nextMovePlayer = (player, name, opponentObj) => {
+    renderSecretBoard(opponentObj, 'player-two', player);
+    changeLowerMessage(`It's the Computer's turn!`);
+  };
+
+  const nextMoveComputer = (player, name, opponentObj) => {
+    renderPlayerBoard(opponentObj, 'player-one', player);
+    changeLowerMessage(`It's ${name}'s turn!`);
   };
 
   const changeLowerMessage = message => {
@@ -111,7 +120,12 @@ const DOM = (() => {
     bannerDiv.innerText = message;
   };
 
-  return { renderPlayerBoard, renderSecretBoard, nextMove };
+  return {
+    renderPlayerBoard,
+    renderSecretBoard,
+    nextMovePlayer,
+    nextMoveComputer
+  };
 })();
 
 export { DOM as default };
