@@ -124,7 +124,8 @@ const DOM = (() => {
     renderPlayerBoard,
     renderSecretBoard,
     nextMovePlayer,
-    nextMoveComputer
+    nextMoveComputer,
+    changeLowerMessage
   };
 })();
 

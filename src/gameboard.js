@@ -9,6 +9,15 @@ const gameboard = function() {
   };
 
   const areShipsSunk = () => {
+    // for (var i = 0; i < model.length; i++) {
+    //   if (model[i] === 'miss' || model[i] === 'X' || model[i] === null) {
+    //     // nothing
+    //   } else {
+    //     return false;
+    //   }
+    // }
+    // return true;
+
     for (const key in ships) {
       if (!ships[key].isSunk()) {
         return false;

@@ -1,6 +1,6 @@
 const shipsFactory = function(length, identifier) {
   const shipLength = length;
-  const shipModel = new Array(shipLength).fill(null);
+  let shipModel = new Array(shipLength).fill(null);
   const name = identifier;
 
   const showName = () => name;
@@ -11,6 +11,7 @@ const shipsFactory = function(length, identifier) {
 
   const isSunk = () => {
     for (var i = 0; i < shipLength; i++) {
+      const currentSpece = shipModel[i];
       if (shipModel[i] === null) {
         return false;
       }

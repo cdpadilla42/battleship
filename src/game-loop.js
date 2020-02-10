@@ -11,7 +11,7 @@ const gameLoop = function() {
     renderBoard(playerOne, 'player-one', playerTwo);
     renderSecretBoard(playerTwo, 'player-two', playerOne);
     // move start
-    nextMove(playerOne, 'player-one', playerTwo);
+    firstMove(playerOne, 'player-one', playerTwo);
   };
 
   const autoPlaceShips = function(player) {
@@ -22,12 +22,12 @@ const gameLoop = function() {
     currentBoard.placeShip(shipsObj.C, 7);
   };
 
-  const isOver = () => {
-    if (playerOne.playerBoard.areShipsSunk()) {
-      return playerTwo; // returns winner
+  const isOver = (firstPlayer, secondPlayer) => {
+    if (firstPlayer.playerBoard.areShipsSunk()) {
+      return firstPlayer; // returns winner
     }
-    if (playerTwo.playerBoard.areShipsSunk()) {
-      return playerOne; // returns winner
+    if (secondPlayer.playerBoard.areShipsSunk()) {
+      return secondPlayer; // returns winner
     }
     return false;
   };
@@ -44,8 +44,8 @@ const gameLoop = function() {
     // connects to DOM's next move changes
     DOM.nextMovePlayer(player, name, opponentObj);
     // run computer move
-    if (isOver()) {
-      gameOver(isOver());
+    if (isOver(player, opponentObj)) {
+      gameOver(isOver(player, opponentObj));
       return;
     }
     opponentObj.randomMove(player);
@@ -55,6 +55,11 @@ const gameLoop = function() {
       return;
     }
     DOM.nextMoveComputer(opponentObj, 'player-two', player);
+  };
+
+  const firstMove = (player, name, opponentObj) => {
+    DOM.nextMovePlayer(player, name, opponentObj);
+    DOM.changeLowerMessage(`It's ${name}'s turn!`);
   };
 
   const gameOver = winner => {
