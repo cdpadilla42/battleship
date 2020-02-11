@@ -3,6 +3,7 @@ import gameLoop from './game-loop';
 const DOM = (() => {
   let breakPoints = [7, 15, 23, 31, 39, 47, 55, 63];
   let callbackForMove;
+  let gameStop = false;
   const renderPlayerBoard = (player, name, opponentObj) => {
     const boardData = player.playerBoard.showBoard();
     const boardElement = document.querySelector(`.${name}`);
@@ -85,9 +86,16 @@ const DOM = (() => {
     td.setAttribute('data-index', index);
   };
 
+  const toggleListeners = () => {
+    gameStop = !gameStop;
+  };
+
   const addListenerToTd = (td, player, opponentObj) => {
     td.addEventListener('click', e => {
       // switch moves here
+      if (gameStop) {
+        return;
+      }
       console.log(e.target.getAttribute('data-index'));
       const index = e.target.getAttribute('data-index');
       console.log('for', player);
@@ -110,13 +118,23 @@ const DOM = (() => {
     changeLowerMessage(`It's ${name}'s turn!`);
   };
 
+  const hideTopBanner = () => {
+    const banner = document.querySelector('.winner');
+    banner.classList.add('hide');
+  };
+
+  const showTopBanner = () => {
+    const banner = document.querySelector('.winner');
+    banner.classList.remove('hide');
+  };
+
   const changeLowerMessage = message => {
     const messageDiv = document.querySelector('.message');
     messageDiv.innerText = message;
   };
 
   const changeBannerMessage = message => {
-    const bannerDiv = document.querySelector('.winner-space');
+    const bannerDiv = document.querySelector('.winner');
     bannerDiv.innerText = message;
   };
 
@@ -125,7 +143,11 @@ const DOM = (() => {
     renderSecretBoard,
     nextMovePlayer,
     nextMoveComputer,
-    changeLowerMessage
+    changeLowerMessage,
+    hideTopBanner,
+    showTopBanner,
+    changeBannerMessage,
+    toggleListeners
   };
 })();
 

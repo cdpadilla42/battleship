@@ -10,6 +10,7 @@ const gameLoop = function() {
     autoPlaceShips(playerTwo);
     renderBoard(playerOne, 'player-one', playerTwo);
     renderSecretBoard(playerTwo, 'player-two', playerOne);
+    DOM.hideTopBanner();
     // move start
     firstMove(playerOne, 'player-one', playerTwo);
   };
@@ -44,10 +45,10 @@ const gameLoop = function() {
     // connects to DOM's next move changes
     DOM.nextMovePlayer(player, name, opponentObj);
     // run computer move
-    if (isOver(player, opponentObj)) {
-      gameOver(isOver(player, opponentObj));
-      return;
-    }
+    // if (isOver(player, opponentObj)) {
+    //   gameOver(isOver(player, opponentObj));
+    //   return;
+    // }
     opponentObj.randomMove(player);
     // reinstate player move
     if (isOver()) {
@@ -65,7 +66,12 @@ const gameLoop = function() {
   const gameOver = winner => {
     console.log('game over!');
     // ends game, calls to render appropriate views.
+    // THIS IS THE NEXT STEP!!!
     // eventually ... ends clickability
+    DOM.showTopBanner();
+    DOM.changeBannerMessage('Game Over!');
+    DOM.changeLowerMessage('We have a winner!');
+    DOM.toggleListeners();
   };
 
   const gameStart = () => {
