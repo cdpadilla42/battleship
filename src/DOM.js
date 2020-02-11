@@ -105,7 +105,7 @@ const DOM = (() => {
   };
 
   const firstMove = (player, name, opponentObj) => {
-    changeLowerMessage(`It's ${name}'s turn!`);
+    changeLowerMessage(`It's your turn!`);
   };
 
   const nextMovePlayer = (player, name, opponentObj) => {
@@ -115,7 +115,7 @@ const DOM = (() => {
 
   const nextMoveComputer = (player, name, opponentObj) => {
     renderPlayerBoard(opponentObj, 'player-one', player);
-    changeLowerMessage(`It's ${name}'s turn!`);
+    changeLowerMessage(`It's your turn!`);
   };
 
   const hideTopBanner = () => {
@@ -138,6 +138,13 @@ const DOM = (() => {
     bannerDiv.innerText = message;
   };
 
+  const addNewRoundBttn = () => {
+    const bttn = document.querySelector('#round-start');
+    bttn.addEventListener('click', () => {
+      gameLoop().nextGame();
+    });
+  };
+
   return {
     renderPlayerBoard,
     renderSecretBoard,
@@ -147,7 +154,8 @@ const DOM = (() => {
     hideTopBanner,
     showTopBanner,
     changeBannerMessage,
-    toggleListeners
+    toggleListeners,
+    addNewRoundBttn
   };
 })();
 

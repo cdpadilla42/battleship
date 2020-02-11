@@ -45,22 +45,22 @@ const gameLoop = function() {
     // connects to DOM's next move changes
     DOM.nextMovePlayer(player, name, opponentObj);
     // run computer move
-    // if (isOver(player, opponentObj)) {
-    //   gameOver(isOver(player, opponentObj));
-    //   return;
-    // }
+    if (isOver(player, opponentObj)) {
+      gameOver(isOver(player, opponentObj));
+      return;
+    }
     opponentObj.randomMove(player);
     // reinstate player move
-    if (isOver()) {
+    DOM.nextMoveComputer(opponentObj, 'player-two', player);
+    if (isOver(player, opponentObj)) {
       gameOver(isOver());
       return;
     }
-    DOM.nextMoveComputer(opponentObj, 'player-two', player);
   };
 
   const firstMove = (player, name, opponentObj) => {
     DOM.nextMovePlayer(player, name, opponentObj);
-    DOM.changeLowerMessage(`It's ${name}'s turn!`);
+    DOM.changeLowerMessage(`It's your turn!`);
   };
 
   const gameOver = winner => {
@@ -75,11 +75,13 @@ const gameLoop = function() {
   };
 
   const gameStart = () => {
-    // render boards
-    // render message
-    // start move
-    // TO DO - move this to computerStart, that function already exists.
-    let playerOne = playerFactory();
+    DOM.addNewRoundBttn();
+  };
+
+  const nextGame = () => {
+    playerOne = playerFactory();
+    playerTwo = computer();
+    newGameComp();
   };
 
   return {
@@ -90,7 +92,8 @@ const gameLoop = function() {
     renderBoard,
     renderSecretBoard,
     nextMove,
-    gameStart
+    gameStart,
+    nextGame
   };
 };
 
