@@ -15,12 +15,41 @@ const gameLoop = function() {
     firstMove(playerOne, 'player-one', playerTwo);
   };
 
+  const handleShipPlacement = coord => {
+    console.log('placing ship', nextShip);
+    let shipsObj = playerOne.playerBoard.showShips();
+    playerOne.playerBoard.placeShip(shipsObj[nextShip], coord);
+
+    if (nextShip === 'C') {
+      console.log('game start!');
+    }
+    if (nextShip === 'B') {
+      nextShip = 'C';
+    }
+    if (nextShip === 'A') {
+      nextShip = 'B';
+    }
+  };
+
   const autoPlaceShips = function(player) {
     const currentBoard = player.playerBoard;
     const shipsObj = currentBoard.showShips();
     currentBoard.placeShip(shipsObj.A, 0);
     currentBoard.placeShip(shipsObj.B, 3);
     currentBoard.placeShip(shipsObj.C, 7);
+  };
+
+  const areShipsPlaced = () => {
+    const board = playerOne.playerBoard.showBoard();
+    for (var i = 0; i < board.length; i++) {
+      if (board[i] === null) {
+        continue;
+      }
+      if (board[i][0] === 'C') {
+        return true;
+      }
+    }
+    return false;
   };
 
   const isOver = (firstPlayer, secondPlayer) => {
@@ -84,6 +113,14 @@ const gameLoop = function() {
     newGameComp();
   };
 
+  const handleCoordSubmission = () => {
+    handleCoordSubmission();
+  };
+
+  const setUpGame = () => {
+    DOM.addListenerShipPlacement();
+  };
+
   return {
     newGameComp,
     playerOne,
@@ -93,7 +130,11 @@ const gameLoop = function() {
     renderSecretBoard,
     nextMove,
     gameStart,
-    nextGame
+    nextGame,
+    areShipsPlaced,
+    setUpGame,
+    handleCoordSubmission,
+    handleShipPlacement
   };
 };
 

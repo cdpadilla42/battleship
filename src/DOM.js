@@ -14,7 +14,7 @@ const DOM = (() => {
     let trElement = document.createElement('tr');
     for (var i = 0; i < boardData.length; i++) {
       let tdElement = document.createElement('td');
-      tdElement.innerText = boardData[i];
+      // tdElement.innerText = boardData[i];
       stylizeTdElement(tdElement, boardData[i]);
       addDataIndex(tdElement, i);
       // below line for two live player functionality. Not need for CPU
@@ -40,7 +40,7 @@ const DOM = (() => {
     let trElement = document.createElement('tr');
     for (var i = 0; i < boardData.length; i++) {
       let tdElement = document.createElement('td');
-      tdElement.innerText = boardData[i];
+      // tdElement.innerText = boardData[i];
       stylizeSecretElements(tdElement, boardData[i]);
       addDataIndex(tdElement, i);
       addListenerToTd(tdElement, opponentObj, player);
@@ -79,7 +79,7 @@ const DOM = (() => {
     if (data === 'miss') {
       tdElement.classList.add('miss');
     }
-    tdElement.classList.add('secret');
+    // tdElement.classList.add('secret');
   };
 
   const addDataIndex = (td, index) => {
@@ -145,6 +145,16 @@ const DOM = (() => {
     });
   };
 
+  const handleCoordSubmission = () => {
+    const coord = document.querySelector('#player-name-field').value;
+    gameLoop().handleShipPlacement(coord);
+  };
+
+  const addListenerShipPlacement = () => {
+    const bttn = document.querySelector('#coord-submit');
+    bttn.addEventListener('click', handleCoordSubmission);
+  };
+
   return {
     renderPlayerBoard,
     renderSecretBoard,
@@ -155,7 +165,9 @@ const DOM = (() => {
     showTopBanner,
     changeBannerMessage,
     toggleListeners,
-    addNewRoundBttn
+    addNewRoundBttn,
+    handleCoordSubmission,
+    addListenerShipPlacement
   };
 })();
 
