@@ -1,4 +1,5 @@
 import gameLoop from './game-loop';
+import gameboard from './gameboard';
 
 const DOM = (() => {
   let breakPoints = [7, 15, 23, 31, 39, 47, 55, 63];
@@ -147,7 +148,8 @@ const DOM = (() => {
 
   const handleCoordSubmission = () => {
     const coord = document.querySelector('#player-name-field').value;
-    gameLoop().handleShipPlacement(coord);
+    const board = gameboard();
+    board.placeShip(coord);
   };
 
   const addListenerShipPlacement = () => {

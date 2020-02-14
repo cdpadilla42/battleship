@@ -114,7 +114,7 @@ const gameLoop = function() {
   };
 
   const handleCoordSubmission = () => {
-    handleCoordSubmission();
+    DOM.handleCoordSubmission();
   };
 
   const setUpGame = () => {

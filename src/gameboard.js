@@ -7,6 +7,7 @@ const gameboard = function() {
     B: shipsFactory(3, 'B'),
     C: shipsFactory(1, 'C')
   };
+  let nextShip = 'A';
 
   const areShipsSunk = () => {
     // for (var i = 0; i < model.length; i++) {
@@ -56,7 +57,18 @@ const gameboard = function() {
     return ships;
   };
 
-  const placeShip = function(ship, location) {
+  const changeNextShip = () => {
+    if (nextShip === 'C') {
+      console.log('all ships placed!');
+    } else if (nextShip === 'B') {
+      nextShip = 'C';
+    } else if (nextShip === 'A') {
+      nextShip = 'B';
+    }
+  };
+
+  const placeShip = function(location) {
+    const ship = ships[nextShip];
     const shipName = ship.showName();
     const shipLength = ship.showLength();
     if (isShipOverflowing(shipLength, location)) {
@@ -67,6 +79,8 @@ const gameboard = function() {
       model[i] = `${shipName}${counter}`;
       counter++;
     }
+    changeNextShip();
+    console.log('next ship: ', nextShip);
   };
 
   const placementError = () => {
